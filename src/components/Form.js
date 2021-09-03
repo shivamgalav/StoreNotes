@@ -7,8 +7,9 @@ function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
     return () => setValue(value => value + 1); // update the state to force render
 }
+let key = 0;
 function Form(props) {
-    let key = 0;
+    
     const [text, setText] = useState("");
     const [showCard, setshowCard] = useState(false);
     const [title, settitle] = useState("")
@@ -19,10 +20,12 @@ function Form(props) {
         settitle(event.target.value);
     }
     const handleClick = () => {
-        const obj = {title: title,
+        const obj = {id:`${key}`,title: title,
                     text:text};
+        key++;
         data.push(obj);
         setshowCard(true);
+        console.log(data);
         forceUpdate();
     }
     const forceUpdate = useForceUpdate();
@@ -41,7 +44,7 @@ function Form(props) {
             <button type="button" className="btn btn-primary" onClick={handleClick}>Submit</button>
             <div className="cl my-3">
             {showCard && data.map(dt=>(
-                <Card key={key++} text={dt.text} title={dt.title} style = {props.style}/>
+                <Card key={dt.id} text={dt.text} id={dt.id} title={dt.title} style = {props.style} data={data}/>
             ))}
             </div>
         </div>
