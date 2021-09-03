@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 
 function Card(props) {
-    const [show, setShow] = useState(true);
     const [edit, setEdit] = useState(false);
     const [text, setText] = useState(props.text);
     const [title, settitle] = useState(props.title);
@@ -12,8 +11,11 @@ function Card(props) {
         settitle(event.target.value);
     }
     const handleDelete = ()=>{
-        setShow(false);
-        props.data.splice(props.data.findIndex(a => a.id === props.id) , 1);
+        if(window.confirm("Are u sure to Delete!!")){
+            props.data.splice(props.data.findIndex(a => a.id === props.id) , 1);
+            props.update();
+            localStorage.data = JSON.stringify(props.data);
+        }
         // console.log(props.data);
     }
     const handleEdit = ()=>{
@@ -29,14 +31,14 @@ function Card(props) {
         //Update object's name property.
         props.data[objIndex].text = text;
         props.data[objIndex].title = title;
-
+        localStorage.data = JSON.stringify(props.data);
         //Log object to console again.
         // console.log("After update: ", myArray[objIndex])
     }
     return (
         <>
         {
-        show && <div className="mx-3 my-2">
+        <div className="mx-3 my-2">
             <div className="card" style={{width : "18rem"}}>
             <div className="card-body" style={props.style}>
                 {edit && <input type="title" className="form-control" style = {props.style} id="exampleFormControlInput1" 
