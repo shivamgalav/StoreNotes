@@ -25,15 +25,10 @@ function Card(props) {
         setEdit(false);
         const objIndex = props.data.findIndex((obj => obj.id === props.id));
 
-        //Log object to Console.
-        // console.log("Before update: ", myArray[objIndex])
-
-        //Update object's name property.
         props.data[objIndex].text = text;
         props.data[objIndex].title = title;
         localStorage.data = JSON.stringify(props.data);
-        //Log object to console again.
-        // console.log("After update: ", myArray[objIndex])
+
     }
     return (
         <>
